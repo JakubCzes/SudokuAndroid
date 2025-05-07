@@ -1,0 +1,53 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "G:\\Users\\PC\\Desktop\\studia\\SudokuAndroid\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{4854896C-FC6D-4FFF-B01F-C3C11F1CC651}|SudokuMobile.csproj|g:\\users\\pc\\desktop\\studia\\sudokuandroid\\resources\\layout\\activity_main.xml||{6B79B2C4-8503-4A04-8248-ADCEF2B49CB1}",
+      "RelativeMoniker": "D:0:0:{4854896C-FC6D-4FFF-B01F-C3C11F1CC651}|SudokuMobile.csproj|solutionrelative:resources\\layout\\activity_main.xml||{6B79B2C4-8503-4A04-8248-ADCEF2B49CB1}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4854896C-FC6D-4FFF-B01F-C3C11F1CC651}|SudokuMobile.csproj|g:\\users\\pc\\desktop\\studia\\sudokuandroid\\mainactivity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4854896C-FC6D-4FFF-B01F-C3C11F1CC651}|SudokuMobile.csproj|solutionrelative:mainactivity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "activity_main.xml",
+              "DocumentMoniker": "G:\\Users\\PC\\Desktop\\studia\\SudokuAndroid\\Resources\\layout\\activity_main.xml",
+              "RelativeDocumentMoniker": "Resources\\layout\\activity_main.xml",
+              "ToolTip": "G:\\Users\\PC\\Desktop\\studia\\SudokuAndroid\\Resources\\layout\\activity_main.xml",
+              "RelativeToolTip": "Resources\\layout\\activity_main.xml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003576|",
+              "WhenOpened": "2025-05-07T19:40:48.886Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "MainActivity.cs",
+              "DocumentMoniker": "G:\\Users\\PC\\Desktop\\studia\\SudokuAndroid\\MainActivity.cs",
+              "RelativeDocumentMoniker": "MainActivity.cs",
+              "ToolTip": "G:\\Users\\PC\\Desktop\\studia\\SudokuAndroid\\MainActivity.cs",
+              "RelativeToolTip": "MainActivity.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-07T19:40:37.125Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

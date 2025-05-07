@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Ten kod został wygenerowany przez narzędzie.
+    Został on wygenerowany na podstawie pliku G:\Users\PC\Desktop\studia\SudokuMobile\AndroidManifest.xml
+    Zmiany w tym pliku mogą powodować niepoprawne zachowanie i zostaną utracone
+    w przypadku ponownego wygenerowania zawartości.
+    -->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" package="com.companyname.SudokuMobile" android:versionName="1.0">
+  <uses-sdk android:minSdkVersion="21" android:targetSdkVersion="35" />
+  <uses-permission android:name="android.permission.INTERNET" />
+  <application android:allowBackup="true" android:icon="@mipmap/appicon" android:label="@string/app_name" android:roundIcon="@mipmap/appicon_round" android:supportsRtl="true" android:name="android.app.Application" android:debuggable="true" android:extractNativeLibs="true">
+    <activity android:label="@string/app_name" android:name="crc6452f673c7adca107e.MainActivity" android:exported="true">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+        <category android:name="android.intent.category.LAUNCHER" />
+      </intent-filter>
+    </activity>
+    <activity android:label="PlayActivity" android:name="crc6452f673c7adca107e.PlayActivity" />
+    <provider android:name="mono.MonoRuntimeProvider" android:exported="false" android:initOrder="1999999999" android:authorities="com.companyname.SudokuMobile.mono.MonoRuntimeProvider.__mono_init__" />
+  </application>
+</manifest>

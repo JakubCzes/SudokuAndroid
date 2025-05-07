@@ -1,0 +1,6 @@
+SudokuMobile.MainActivity, SudokuMobile;crc6452f673c7adca107e.MainActivity
+SudokuMobile.MainActivity;crc6452f673c7adca107e.MainActivity
+sudokumobile.MainActivity;crc6452f673c7adca107e.MainActivity
+SudokuMobile.PlayActivity, SudokuMobile;crc6452f673c7adca107e.PlayActivity
+SudokuMobile.PlayActivity;crc6452f673c7adca107e.PlayActivity
+sudokumobile.PlayActivity;crc6452f673c7adca107e.PlayActivity

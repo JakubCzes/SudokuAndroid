@@ -1,0 +1,8 @@
+layout\activity_main;layout\activity_main
+layout\play_activity;layout\play_activity
+mipmap\appicon;mipmap\appicon
+mipmap\appicon_background;mipmap\appicon_background
+mipmap\appicon_foreground;mipmap\appicon_foreground
+mipmap\appicon_round;mipmap\appicon_round
+values\ic_launcher_background;values\ic_launcher_background
+values\strings;values\strings
