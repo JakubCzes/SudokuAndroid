@@ -1,14 +1,29 @@
 using Android.Content;
+using Android.Content.PM;
+using Android.OS;
+using Android.Views;
 
 namespace SudokuMobile;
 
-[Activity(Label = "PlayActivity")]
+[Activity(Label = "PlayActivity", ScreenOrientation = ScreenOrientation.Portrait)]
 public class PlayActivity : Activity
 {
     protected override void OnCreate(Bundle? savedInstanceState)
     {
         base.OnCreate(savedInstanceState);
-        SetContentView(Resource.Layout.play_activity);
+		if (Build.VERSION.SdkInt >= BuildVersionCodes.P)
+		{
+			Window.Attributes.LayoutInDisplayCutoutMode = LayoutInDisplayCutoutMode.ShortEdges;
+		}
+		Window.DecorView.SystemUiVisibility = (StatusBarVisibility)(
+			SystemUiFlags.ImmersiveSticky
+			| SystemUiFlags.LayoutStable
+			| SystemUiFlags.LayoutHideNavigation
+			| SystemUiFlags.LayoutFullscreen
+			| SystemUiFlags.HideNavigation
+			| SystemUiFlags.Fullscreen
+			);
+		SetContentView(Resource.Layout.play_activity);
 
 		Button buttonLatwy = FindViewById<Button>(Resource.Id.buttonLatwy);
 		Button buttonSredni = FindViewById<Button>(Resource.Id.buttonSredni);
