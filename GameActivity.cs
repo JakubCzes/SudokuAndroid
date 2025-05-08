@@ -3,6 +3,7 @@ using Android.Content.PM;
 using Android.Graphics;
 using Android.Graphics.Drawables;
 using Android.OS;
+using Android.Telecom;
 using Android.Views;
 
 namespace SudokuMobile
@@ -309,6 +310,7 @@ namespace SudokuMobile
 					if (selectedCell != null)
 					{
 						selectedCell.Text = ((Button)s).Text;
+						selectedCell.Tag = Color.LightGray.ToArgb();
 					}
 				};
 			}
