@@ -11,7 +11,10 @@ namespace SudokuMobile
 	[Activity(Label = "GameActivity", ScreenOrientation = ScreenOrientation.Portrait)]
 	public class GameActivity : Activity
     {
-		int[,] solvedBoard = new int[9, 9];
+        System.Timers.Timer timer;
+        DateTime startTime;
+        TextView textCzas;
+        int[,] solvedBoard = new int[9, 9];
 		protected override void OnCreate(Bundle? savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -33,7 +36,10 @@ namespace SudokuMobile
 			string poziom = Intent.GetStringExtra("poziom") ?? "latwy";
 
 			TextView trudnosc = FindViewById<TextView>(Resource.Id.textTrudnosc);
-			trudnosc.Text = $"Trudnoœæ: \n{poziom}";
+            textCzas = FindViewById<TextView>(Resource.Id.textCzas);
+            startTime = DateTime.Now;
+            StartTimer();
+            trudnosc.Text = $"Trudnoœæ: \n{poziom}";
 			GridLayout grid = FindViewById<GridLayout>(Resource.Id.sudokuGrid);
 			Button buttonSprawdz = FindViewById<Button>(Resource.Id.buttonSprawdz);
 
@@ -315,5 +321,20 @@ namespace SudokuMobile
 				};
 			}
 		}
-	}
+        private void StartTimer()
+        {
+            timer = new System.Timers.Timer(1000); // 1 sekunda
+            timer.Elapsed += (s, e) =>
+            {
+                RunOnUiThread(() =>
+                {
+                    TimeSpan elapsed = DateTime.Now - startTime;
+                    int minutes = (int)elapsed.TotalMinutes;
+                    int seconds = elapsed.Seconds;
+                    textCzas.Text = $"Czas: \n{minutes}:{seconds:D2}";
+                });
+            };
+            timer.Start();
+        }
+    }
 }

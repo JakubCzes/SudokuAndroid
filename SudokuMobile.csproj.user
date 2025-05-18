@@ -1,11 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <SelectedDevice>pixel_7_-_api_35</SelectedDevice>
+    <SelectedDevice>Pixel_9_Pro_XL_API_35</SelectedDevice>
     <SelectedPlatformGroup>Emulator</SelectedPlatformGroup>
-    <ActiveDebugProfile>Pixel 7 - API 35 (Android 15.0 - API 35)</ActiveDebugProfile>
-    <DefaultDevice>pixel_7_-_api_35</DefaultDevice>
+    <ActiveDebugProfile>Pixel 9 Pro XL API 35 (Android 15.0 — API 35)</ActiveDebugProfile>
+    <DefaultDevice>Pixel_9_Pro_XL_API_35</DefaultDevice>
     <AndroidDesignerPreferredTheme>AppTheme</AndroidDesignerPreferredTheme>
+    <AndroidDesignerPreferredDevice>7.3in Foldable</AndroidDesignerPreferredDevice>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DebuggerFlavor>ProjectDebugger</DebuggerFlavor>
