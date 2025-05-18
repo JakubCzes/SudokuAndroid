@@ -15,6 +15,7 @@ namespace SudokuMobile
         DateTime startTime;
         TextView textCzas;
         int[,] solvedBoard = new int[9, 9];
+		int minutes, seconds;
 		protected override void OnCreate(Bundle? savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -99,7 +100,8 @@ namespace SudokuMobile
 
 				if (errors == 0)
 				{
-					Toast.MakeText(this, "Gratulacje! Wszystkie liczby s¹ poprawne!", ToastLength.Long).Show();
+					Toast.MakeText(this, $"Gratulacje! Wszystkie liczby s¹ poprawne! Czas: {minutes:D2}:{seconds:D2}", ToastLength.Long).Show();
+					timer.Stop();
 				}
 				else
 				{
@@ -330,8 +332,8 @@ namespace SudokuMobile
                 RunOnUiThread(() =>
                 {
                     TimeSpan elapsed = DateTime.Now - startTime;
-                    int minutes = (int)elapsed.TotalMinutes;
-                    int seconds = elapsed.Seconds;
+                    minutes = (int)elapsed.TotalMinutes;
+                    seconds = elapsed.Seconds;
 					textCzas.Text = $"Czas: \n{minutes:D2}:{seconds:D2}";
                 });
             };
