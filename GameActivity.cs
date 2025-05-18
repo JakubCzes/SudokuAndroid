@@ -37,8 +37,6 @@ namespace SudokuMobile
 
 			TextView trudnosc = FindViewById<TextView>(Resource.Id.textTrudnosc);
             textCzas = FindViewById<TextView>(Resource.Id.textCzas);
-            startTime = DateTime.Now;
-            StartTimer();
             trudnosc.Text = $"Trudnoœæ: \n{poziom}";
 			GridLayout grid = FindViewById<GridLayout>(Resource.Id.sudokuGrid);
 			Button buttonSprawdz = FindViewById<Button>(Resource.Id.buttonSprawdz);
@@ -58,6 +56,9 @@ namespace SudokuMobile
 					GenerateSudoku(20, grid);
 					break;
 			}
+
+			startTime = DateTime.Now;
+			StartTimer();
 
 			buttonSprawdz.Click += (s, e) =>
 			{
@@ -331,7 +332,7 @@ namespace SudokuMobile
                     TimeSpan elapsed = DateTime.Now - startTime;
                     int minutes = (int)elapsed.TotalMinutes;
                     int seconds = elapsed.Seconds;
-                    textCzas.Text = $"Czas: \n{minutes}:{seconds:D2}";
+					textCzas.Text = $"Czas: \n{minutes:D2}:{seconds:D2}";
                 });
             };
             timer.Start();
