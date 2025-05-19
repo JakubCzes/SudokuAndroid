@@ -15,7 +15,7 @@ namespace SudokuMobile
         DateTime startTime;
         TextView textCzas;
         int[,] solvedBoard = new int[9, 9];
-		int minutes, seconds;
+		int minutes, seconds, checkCount;
 		protected override void OnCreate(Bundle? savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -46,12 +46,15 @@ namespace SudokuMobile
 			{
 				case "latwy":
 					GenerateSudoku(2, grid);
+					checkCount = 5;
 					break;
 				case "sredni":
 					GenerateSudoku(30, grid);
+					checkCount = 3;
 					break;
 				case "trudny":
 					GenerateSudoku(40, grid);
+					checkCount = 1;
 					break;
 				default:
 					GenerateSudoku(20, grid);
@@ -101,12 +104,23 @@ namespace SudokuMobile
 				if (errors == 0)
 				{
 					Toast.MakeText(this, $"Gratulacje! Wszystkie liczby s¹ poprawne! Czas: {minutes:D2}:{seconds:D2}", ToastLength.Long).Show();
-					timer.Stop();
+					Finish();
 				}
 				else
 				{
-					Toast.MakeText(this, $"B³¹d: {errors} niepoprawnych komórek", ToastLength.Long).Show();
+					if (checkCount > 0)
+					{
+						checkCount--;
+						Toast.MakeText(this, $"{errors} niepoprawnych komórek. \nPozosta³o prób: {checkCount}", ToastLength.Long).Show();
+					}
+					else
+					{
+						Toast.MakeText(this, $"Przegra³eœ! {errors} niepoprawnych komórek", ToastLength.Long).Show();
+						Finish();
+					}
 				}
+
+				
 			};
 		}
 
