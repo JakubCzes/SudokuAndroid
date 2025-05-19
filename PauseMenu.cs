@@ -32,15 +32,16 @@ public class PauseMenu : Activity
         {
             int elapsedSeconds = Intent.GetIntExtra("elapsedSeconds", 0);
 
-            var intent = new Intent(this, typeof(GameActivity));
-            intent.PutExtra("elapsedSeconds", elapsedSeconds); 
-            StartActivity(intent);
-            Finish(); 
+            var resultIntent = new Intent();
+			resultIntent.PutExtra("elapsedSeconds", elapsedSeconds);
+			SetResult(Result.Ok, resultIntent);
+			Finish(); 
         };
 
         buttonExit.Click += (sender, e) =>
         {
             var intent = new Intent(this, typeof(MainActivity));
+            FinishAffinity();
             StartActivity(intent);
         };
     }

@@ -16,6 +16,18 @@ namespace SudokuMobile
         TextView textCzas;
         int[,] solvedBoard = new int[9, 9];
 		int minutes, seconds, checkCount;
+		protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
+		{
+			base.OnActivityResult(requestCode, resultCode, data);
+
+			if (requestCode == 1 && resultCode == Result.Ok)
+			{
+				int elapsedSeconds = data.GetIntExtra("elapsedSeconds", 0);
+				startTime = DateTime.Now - TimeSpan.FromSeconds(elapsedSeconds);
+				StartTimer();
+			}
+		}
+
 		protected override void OnCreate(Bundle? savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -62,10 +74,14 @@ namespace SudokuMobile
 					break;
 			}
 
-            int elapsedSeconds = Intent.GetIntExtra("elapsedSeconds", 0);
-            startTime = DateTime.Now - TimeSpan.FromSeconds(elapsedSeconds);
+			int elapsedSeconds = Intent.GetIntExtra("elapsedSeconds", -1);
+			if (elapsedSeconds == -1)
+			{
+				// Pierwsze uruchomienie
+				startTime = DateTime.Now;
+			}
 
-            TimeSpan elapsed = DateTime.Now - startTime;
+			TimeSpan elapsed = DateTime.Now - startTime;
             minutes = (int)elapsed.TotalMinutes;
             seconds = elapsed.Seconds;
             textCzas.Text = $"Czas: \n{minutes:D2}:{seconds:D2}";
@@ -133,12 +149,13 @@ namespace SudokuMobile
 
 			buttonPauza.Click += (sender, e) =>
 			{
-                timer.Stop();
+				timer.Elapsed -= (s, e) => { };
+				timer.Stop();
                 TimeSpan elapsed = DateTime.Now - startTime;
                 var intent = new Intent(this, typeof(PauseMenu));
                 intent.PutExtra("elapsedSeconds", (int)elapsed.TotalSeconds);
-                StartActivity(intent);
-            };
+				StartActivityForResult(intent, 1);
+			};
 
 		}
 
