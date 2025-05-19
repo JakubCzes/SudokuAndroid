@@ -1,4 +1,4 @@
-using Android.Content;
+ï»¿using Android.Content;
 using Android.Content.PM;
 using Android.Graphics;
 using Android.Graphics.Drawables;
@@ -31,16 +31,17 @@ namespace SudokuMobile
 			| SystemUiFlags.HideNavigation
 			| SystemUiFlags.Fullscreen
 			);
-			// Set our view from the "main" layout resource
+
 			SetContentView(Resource.Layout.game_activity);
 
 			string poziom = Intent.GetStringExtra("poziom") ?? "latwy";
 
 			TextView trudnosc = FindViewById<TextView>(Resource.Id.textTrudnosc);
             textCzas = FindViewById<TextView>(Resource.Id.textCzas);
-            trudnosc.Text = $"Trudnoœæ: \n{poziom}";
+            trudnosc.Text = $"TrudnoÅ›Ä‡: \n{poziom}";
 			GridLayout grid = FindViewById<GridLayout>(Resource.Id.sudokuGrid);
 			Button buttonSprawdz = FindViewById<Button>(Resource.Id.buttonSprawdz);
+			Button buttonPauza = FindViewById<Button>(Resource.Id.buttonPauza);
 
 			switch (poziom)
 			{
@@ -61,8 +62,15 @@ namespace SudokuMobile
 					break;
 			}
 
-			startTime = DateTime.Now;
-			StartTimer();
+            int elapsedSeconds = Intent.GetIntExtra("elapsedSeconds", 0);
+            startTime = DateTime.Now - TimeSpan.FromSeconds(elapsedSeconds);
+
+            TimeSpan elapsed = DateTime.Now - startTime;
+            minutes = (int)elapsed.TotalMinutes;
+            seconds = elapsed.Seconds;
+            textCzas.Text = $"Czas: \n{minutes:D2}:{seconds:D2}";
+
+            StartTimer();
 
 			buttonSprawdz.Click += (s, e) =>
 			{
@@ -70,7 +78,7 @@ namespace SudokuMobile
 				for (int i = 0; i < 81; i++)
 				{
 					var view = grid.GetChildAt(i);
-					if (view is EditText cell && cell.Clickable)  // tylko edytowalne komórki
+					if (view is EditText cell && cell.Clickable)  // tylko edytowalne komÃ³rki
 					{
 						int row = i / 9;
 						int col = i % 9;
@@ -81,7 +89,7 @@ namespace SudokuMobile
 							if (userValue == solvedBoard[row, col])
 							{
 								cell.Background = CreateCellBackground(row, col, Color.LightGreen);
-								cell.Clickable = false; // Zablokuj edytowalnoœæ po poprawnym wpisaniu
+								cell.Clickable = false; // Zablokuj edytowalnoÅ›Ä‡ po poprawnym wpisaniu
 								cell.Tag = Color.LightGreen.ToArgb();
 							}
 							else
@@ -93,7 +101,7 @@ namespace SudokuMobile
 						}
 						else
 						{
-							// Pusta komórka lub niepoprawna wartoœæ
+							// Pusta komÃ³rka lub niepoprawna wartoÅ›Ä‡
 							cell.Background = CreateCellBackground(row, col, Color.IndianRed);
 							cell.Tag = Color.IndianRed.ToArgb();
 							errors++;
@@ -103,7 +111,7 @@ namespace SudokuMobile
 
 				if (errors == 0)
 				{
-					Toast.MakeText(this, $"Gratulacje! Wszystkie liczby s¹ poprawne! Czas: {minutes:D2}:{seconds:D2}", ToastLength.Long).Show();
+					Toast.MakeText(this, $"Gratulacje! Wszystkie liczby sÄ… poprawne! Czas: {minutes:D2}:{seconds:D2}", ToastLength.Long).Show();
 					Finish();
 				}
 				else
@@ -111,17 +119,27 @@ namespace SudokuMobile
 					if (checkCount > 0)
 					{
 						checkCount--;
-						Toast.MakeText(this, $"{errors} niepoprawnych komórek. \nPozosta³o prób: {checkCount}", ToastLength.Long).Show();
+						Toast.MakeText(this, $"{errors} niepoprawnych komÃ³rek. \nPozostaÅ‚o prÃ³b: {checkCount}", ToastLength.Long).Show();
 					}
 					else
 					{
-						Toast.MakeText(this, $"Przegra³eœ! {errors} niepoprawnych komórek", ToastLength.Long).Show();
+						Toast.MakeText(this, $"PrzegraÅ‚eÅ›! {errors} niepoprawnych komÃ³rek", ToastLength.Long).Show();
 						Finish();
 					}
 				}
 
 				
 			};
+
+			buttonPauza.Click += (sender, e) =>
+			{
+                timer.Stop();
+                TimeSpan elapsed = DateTime.Now - startTime;
+                var intent = new Intent(this, typeof(PauseMenu));
+                intent.PutExtra("elapsedSeconds", (int)elapsed.TotalSeconds);
+                StartActivity(intent);
+            };
+
 		}
 
 		private Drawable CreateCellBackground(int row, int col, Color backgroundColor)
@@ -137,7 +155,7 @@ namespace SudokuMobile
 			var shape = new GradientDrawable();
 			shape.SetColor(backgroundColor);
 
-			// LayerDrawable + insets = sztuczna gruboœæ krawêdzi
+			// LayerDrawable + insets = sztuczna gruboÅ›Ä‡ krawÄ™dzi
 			var layer = new LayerDrawable(new Drawable[] { shape });
 			layer.SetLayerInset(0, left, top, right, bottom);
 
@@ -148,62 +166,62 @@ namespace SudokuMobile
 			int[,] board = new int[9, 9];
 			Random rand = new Random();
 
-			// Generowanie pe³nej planszy
+			// Generowanie peÅ‚nej planszy
 			if (GenerateCompleteSudoku(board, rand))
 			{
 				Array.Copy(board, solvedBoard, board.Length);
-				// Ukrywanie cyfr (mo¿esz zmieniæ liczbê)
+				// Ukrywanie cyfr (moÅ¼esz zmieniÄ‡ liczbÄ™)
 				HideDigits(board, hide, rand);
 				FillGridFromBoard(board, hide, grid);
 			}
 		}
 		private bool GenerateCompleteSudoku(int[,] board, Random rand)
 		{
-			return SolveSudoku(board, rand);  // U¿ywamy rozwi¹zywania Sudoku, by wygenerowaæ pe³ne rozwi¹zanie
+			return SolveSudoku(board, rand);  // UÅ¼ywamy rozwiÄ…zywania Sudoku, by wygenerowaÄ‡ peÅ‚ne rozwiÄ…zanie
 		}
 
-		// Funkcja rozwi¹zuj¹ca Sudoku za pomoc¹ rekurencji
+		// Funkcja rozwiÄ…zujÄ…ca Sudoku za pomocÄ… rekurencji
 		private bool SolveSudoku(int[,] board, Random rand)
 		{
 			for (int row = 0; row < 9; row++)
 			{
 				for (int col = 0; col < 9; col++)
 				{
-					if (board[row, col] == 0) // Szukamy pustej komórki
+					if (board[row, col] == 0) // Szukamy pustej komÃ³rki
 					{
 						List<int> possibleNumbers = Enumerable.Range(1, 9).ToList();
-						ShuffleList(possibleNumbers, rand);  // Tasujemy liczby, aby by³y losowe
+						ShuffleList(possibleNumbers, rand);  // Tasujemy liczby, aby byÅ‚y losowe
 
 						foreach (int num in possibleNumbers)
 						{
-							if (IsValid(board, row, col, num))  // Jeœli liczba jest poprawna
+							if (IsValid(board, row, col, num))  // JeÅ›li liczba jest poprawna
 							{
 								board[row, col] = num;
-								if (SolveSudoku(board, rand))  // Rekurencyjnie rozwi¹zujemy
+								if (SolveSudoku(board, rand))  // Rekurencyjnie rozwiÄ…zujemy
 								{
 									return true;
 								}
-								board[row, col] = 0; // Jeœli nie uda³o siê rozwi¹zaæ, cofnij
+								board[row, col] = 0; // JeÅ›li nie udaÅ‚o siÄ™ rozwiÄ…zaÄ‡, cofnij
 							}
 						}
-						return false; // Jeœli nie ma mo¿liwego rozwi¹zania
+						return false; // JeÅ›li nie ma moÅ¼liwego rozwiÄ…zania
 					}
 				}
 			}
-			return true; // Zakoñczone, jeœli wszystkie komórki zosta³y wype³nione
+			return true; // ZakoÅ„czone, jeÅ›li wszystkie komÃ³rki zostaÅ‚y wypeÅ‚nione
 		}
 
-		// Funkcja sprawdzaj¹ca, czy liczba jest dozwolona w danej komórce
+		// Funkcja sprawdzajÄ…ca, czy liczba jest dozwolona w danej komÃ³rce
 		private bool IsValid(int[,] board, int row, int col, int num)
 		{
-			// Sprawdzamy, czy liczba nie wystêpuje w tym wierszu
+			// Sprawdzamy, czy liczba nie wystÄ™puje w tym wierszu
 			for (int i = 0; i < 9; i++)
 			{
 				if (board[row, i] == num || board[i, col] == num)
 					return false;
 			}
 
-			// Sprawdzamy, czy liczba nie wystêpuje w tej siatce 3x3
+			// Sprawdzamy, czy liczba nie wystÄ™puje w tej siatce 3x3
 			int startRow = row - row % 3;
 			int startCol = col - col % 3;
 			for (int i = startRow; i < startRow + 3; i++)
@@ -247,14 +265,14 @@ namespace SudokuMobile
 				if (!positions.Contains(pos) && board[row, col] != 0)
 				{
 					positions.Add(pos);
-					board[row, col] = 0;  // Usuwamy cyfrê
+					board[row, col] = 0;  // Usuwamy cyfrÄ™
 				}
 			}
 		}
 
 		private void FillGridFromBoard(int[,] board, int count, GridLayout grid)
 		{
-			int size = 112; // wielkoœæ komórki w px (dostosuj do ekranu)
+			int size = 112; // wielkoÅ›Ä‡ komÃ³rki w px (dostosuj do ekranu)
 			int previousRow = 0;
 			int previousCol = 0;
 			int childIndex = 0;
@@ -275,7 +293,7 @@ namespace SudokuMobile
 					cell.LongClickable = false;
 					cell.InputType = Android.Text.InputTypes.Null;
 
-					// Stylizacja obramowañ
+					// Stylizacja obramowaÅ„
 					Color baseColor = (board[row, col] != 0) ? Color.White : Color.LightGray;
 					cell.Background = CreateCellBackground(row, col, baseColor);
 					cell.Tag = baseColor.ToArgb();

@@ -23,15 +23,21 @@ namespace SudokuMobile
 			| SystemUiFlags.HideNavigation
 			| SystemUiFlags.Fullscreen
 			);
-			// Set our view from the "main" layout resource
+
 			SetContentView(Resource.Layout.activity_main);
 
-            Button buttonPlay = FindViewById<Button>(Resource.Id.buttonPlay); // Your button ID
+            Button buttonPlay = FindViewById<Button>(Resource.Id.buttonPlay); 
+            Button buttonQuit = FindViewById<Button>(Resource.Id.buttonQuit);
 
             buttonPlay.Click += (sender, e) =>
             {
                 var intent = new Intent(this, typeof(PlayActivity));
                 StartActivity(intent);
+            };
+
+            buttonQuit.Click += (sender, e) =>
+            {
+                FinishAffinity();
             };
         }
     }
