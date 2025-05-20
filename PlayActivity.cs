@@ -54,7 +54,7 @@ public class PlayActivity : Activity
 		buttonWroc.Click += (sender, e) =>
 		{
 			var intent = new Intent(this, typeof(MainActivity));
-			StartActivity(intent);
+			Finish();
 		};
 	}
 }
