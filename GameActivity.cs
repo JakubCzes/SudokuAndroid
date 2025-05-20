@@ -46,22 +46,22 @@ namespace SudokuMobile
 
 			SetContentView(Resource.Layout.game_activity);
 
-			string poziom = Intent.GetStringExtra("poziom") ?? "latwy";
+			string poziom = Intent.GetStringExtra("poziom") ?? "łatwy";
 
 			TextView trudnosc = FindViewById<TextView>(Resource.Id.textTrudnosc);
             textCzas = FindViewById<TextView>(Resource.Id.textCzas);
-            trudnosc.Text = $"Trudność: \n{poziom}";
+            trudnosc.Text = $"Trudność: {poziom}";
 			GridLayout grid = FindViewById<GridLayout>(Resource.Id.sudokuGrid);
 			Button buttonSprawdz = FindViewById<Button>(Resource.Id.buttonSprawdz);
 			Button buttonPauza = FindViewById<Button>(Resource.Id.buttonPauza);
 
 			switch (poziom)
 			{
-				case "latwy":
+				case "łatwy":
 					GenerateSudoku(2, grid);
 					checkCount = 5;
 					break;
-				case "sredni":
+				case "średni":
 					GenerateSudoku(30, grid);
 					checkCount = 3;
 					break;
@@ -84,7 +84,7 @@ namespace SudokuMobile
 			TimeSpan elapsed = DateTime.Now - startTime;
             minutes = (int)elapsed.TotalMinutes;
             seconds = elapsed.Seconds;
-            textCzas.Text = $"Czas: \n{minutes:D2}:{seconds:D2}";
+            textCzas.Text = $"Czas: {minutes:D2}:{seconds:D2}";
 
             StartTimer();
 
@@ -383,7 +383,7 @@ namespace SudokuMobile
                     TimeSpan elapsed = DateTime.Now - startTime;
                     minutes = (int)elapsed.TotalMinutes;
                     seconds = elapsed.Seconds;
-					textCzas.Text = $"Czas: \n{minutes:D2}:{seconds:D2}";
+					textCzas.Text = $"Czas: {minutes:D2}:{seconds:D2}";
                 });
             };
             timer.Start();

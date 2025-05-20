@@ -33,14 +33,14 @@ public class PlayActivity : Activity
 		buttonLatwy.Click += (sender, e) =>
 		{
 			var intent = new Intent(this, typeof(GameActivity));
-			intent.PutExtra("poziom", "latwy");
+			intent.PutExtra("poziom", "³atwy");
 			StartActivity(intent);
 		};
 
 		buttonSredni.Click += (sender, e) =>
 		{
 			var intent = new Intent(this, typeof(GameActivity));
-			intent.PutExtra("poziom", "sredni");
+			intent.PutExtra("poziom", "œredni");
 			StartActivity(intent);
 		};
 

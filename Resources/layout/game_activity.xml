@@ -9,40 +9,49 @@
 		android:orientation="vertical"
 		android:paddingTop="80dp">
 
-		<LinearLayout
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_gravity="center"
-		android:orientation="horizontal"
-		android:layout_marginBottom="10dp">
+		<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp"
+    android:paddingHorizontal="16dp">
 
-			<TextView
-				android:id="@+id/textTrudnosc"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:textSize="26sp"
-				android:textColor="@android:color/black"
-				android:layout_marginBottom="8dp"
-				android:layout_gravity="left" />
-
-			<TextView
-				android:id="@+id/textCzas"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:textSize="26sp"
-				android:textColor="@android:color/black"
-				android:text="Czas: \n00:00"
-				android:layout_marginBottom="8dp"
-				android:layout_gravity="left" />
-
+			<!-- Przycisk po prawej stronie -->
 			<Button
 				android:id="@+id/buttonPauza"
 				android:layout_width="75dp"
 				android:layout_height="75dp"
 				android:textSize="30sp"
-				android:text="| |"/>
-			
-		</LinearLayout>
+				android:text="| |"
+				android:layout_alignParentEnd="true"
+				android:layout_centerVertical="true"/>
+
+			<!-- Tekst po lewej stronie -->
+			<LinearLayout
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:orientation="vertical"
+				android:layout_toStartOf="@id/buttonPauza"
+				android:layout_alignParentStart="true"
+				android:layout_centerVertical="true">
+
+				<TextView
+					android:id="@+id/textTrudnosc"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:textSize="26sp"
+					android:textColor="@android:color/black"
+					android:text="Trudność: Łatwa"/>
+
+				<TextView
+					android:id="@+id/textCzas"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:textSize="26sp"
+					android:textColor="@android:color/black"
+					android:text="Czas: 00:00"
+					android:layout_marginTop="4dp"/>
+			</LinearLayout>
+		</RelativeLayout>
 
 		<GridLayout
         android:id="@+id/sudokuGrid"
