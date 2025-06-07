@@ -12,6 +12,7 @@ namespace SudokuMobile
 	public class GameActivity : Activity
     {
 		int[,] solvedBoard = new int[9, 9];
+		int checkCount;
 		protected override void OnCreate(Bundle? savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -29,6 +30,68 @@ namespace SudokuMobile
 			);
 
 			SetContentView(Resource.Layout.game_activity);
+
+			GridLayout grid = FindViewById<GridLayout>(Resource.Id.sudokuGrid);
+			Button buttonSprawdz = FindViewById<Button>(Resource.Id.buttonSprawdz);
+
+			buttonSprawdz.Click += (s, e) =>
+			{
+				int errors = 0;
+				for (int i = 0; i < 81; i++)
+				{
+					var view = grid.GetChildAt(i);
+					if (view is EditText cell && cell.Clickable)  // tylko edytowalne komórki
+					{
+						int row = i / 9;
+						int col = i % 9;
+						string text = cell.Text.Trim();
+
+						if (int.TryParse(text, out int userValue))
+						{
+							if (userValue == solvedBoard[row, col])
+							{
+								cell.Background = CreateCellBackground(row, col, Color.LightGreen);
+								cell.Clickable = false; // Zablokuj edytowalność po poprawnym wpisaniu
+								cell.Tag = Color.LightGreen.ToArgb();
+							}
+							else
+							{
+								cell.Background = CreateCellBackground(row, col, Color.IndianRed);
+								cell.Tag = Color.IndianRed.ToArgb();
+								errors++;
+							}
+						}
+						else
+						{
+							// Pusta komórka lub niepoprawna wartość
+							cell.Background = CreateCellBackground(row, col, Color.IndianRed);
+							cell.Tag = Color.IndianRed.ToArgb();
+							errors++;
+						}
+					}
+				}
+
+				if (errors == 0)
+				{
+					Toast.MakeText(this, $"Gratulacje! Wszystkie liczby są poprawne!", ToastLength.Long).Show();
+					Finish();
+				}
+				else
+				{
+					if (checkCount > 0)
+					{
+						checkCount--;
+						Toast.MakeText(this, $"{errors} niepoprawnych komórek. \nPozostało prób: {checkCount}", ToastLength.Long).Show();
+					}
+					else
+					{
+						Toast.MakeText(this, $"Przegrałeś! {errors} niepoprawnych komórek", ToastLength.Long).Show();
+						Finish();
+					}
+				}
+
+
+			};
 		}
 		private Drawable CreateCellBackground(int row, int col, Color backgroundColor)
 		{
