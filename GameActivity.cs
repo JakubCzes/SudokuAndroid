@@ -16,6 +16,17 @@ namespace SudokuMobile
 		DateTime startTime;
 		TextView textCzas;
 		int minutes, seconds, checkCount;
+		protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
+		{
+			base.OnActivityResult(requestCode, resultCode, data);
+
+			if (requestCode == 1 && resultCode == Result.Ok)
+			{
+				int elapsedSeconds = data.GetIntExtra("elapsedSeconds", 0);
+				startTime = DateTime.Now - TimeSpan.FromSeconds(elapsedSeconds);
+				StartTimer();
+			}
+		}
 		protected override void OnCreate(Bundle? savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -40,6 +51,7 @@ namespace SudokuMobile
 			GridLayout grid = FindViewById<GridLayout>(Resource.Id.sudokuGrid);
 			textCzas = FindViewById<TextView>(Resource.Id.textCzas);
 			Button buttonSprawdz = FindViewById<Button>(Resource.Id.buttonSprawdz);
+			Button buttonPauza = FindViewById<Button>(Resource.Id.buttonPauza);
 
 			trudnosc.Text = $"Trudność: {poziom}";
 
@@ -60,6 +72,13 @@ namespace SudokuMobile
 				default:
 					GenerateSudoku(20, grid);
 					break;
+			}
+
+			int elapsedSeconds = Intent.GetIntExtra("elapsedSeconds", -1);
+			if (elapsedSeconds == -1)
+			{
+				// Pierwsze uruchomienie
+				startTime = DateTime.Now;
 			}
 
 			startTime = DateTime.Now;
@@ -125,8 +144,15 @@ namespace SudokuMobile
 						Finish();
 					}
 				}
-
-
+			};
+			buttonPauza.Click += (sender, e) =>
+			{
+				timer.Elapsed -= (s, e) => { };
+				timer.Stop();
+				TimeSpan elapsed = DateTime.Now - startTime;
+				var intent = new Intent(this, typeof(PauseMenu));
+				intent.PutExtra("elapsedSeconds", (int)elapsed.TotalSeconds);
+				StartActivityForResult(intent, 1);
 			};
 		}
 		private Drawable CreateCellBackground(int row, int col, Color backgroundColor)
