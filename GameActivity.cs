@@ -222,6 +222,27 @@ namespace SudokuMobile
 					childIndex++;
 				}
 			}
+			Button button1 = FindViewById<Button>(Resource.Id.button1);
+			Button button2 = FindViewById<Button>(Resource.Id.button2);
+			Button button3 = FindViewById<Button>(Resource.Id.button3);
+			Button button4 = FindViewById<Button>(Resource.Id.button4);
+			Button button5 = FindViewById<Button>(Resource.Id.button5);
+			Button button6 = FindViewById<Button>(Resource.Id.button6);
+			Button button7 = FindViewById<Button>(Resource.Id.button7);
+			Button button8 = FindViewById<Button>(Resource.Id.button8);
+			Button button9 = FindViewById<Button>(Resource.Id.button9);
+
+			foreach (var button in new[] { button1, button2, button3, button4, button5, button6, button7, button8, button9 })
+			{
+				button.Click += (s, e) =>
+				{
+					if (selectedCell != null)
+					{
+						selectedCell.Text = ((Button)s).Text;
+						selectedCell.Tag = Color.LightGray.ToArgb();
+					}
+				};
+			}
 		}
 	}
 }
