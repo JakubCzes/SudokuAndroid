@@ -31,8 +31,32 @@ namespace SudokuMobile
 
 			SetContentView(Resource.Layout.game_activity);
 
+			string poziom = Intent.GetStringExtra("poziom") ?? "łatwy";
+
+			TextView trudnosc = FindViewById<TextView>(Resource.Id.textTrudnosc);
 			GridLayout grid = FindViewById<GridLayout>(Resource.Id.sudokuGrid);
 			Button buttonSprawdz = FindViewById<Button>(Resource.Id.buttonSprawdz);
+
+			trudnosc.Text = $"Trudność: {poziom}";
+
+			switch (poziom)
+			{
+				case "łatwy":
+					GenerateSudoku(2, grid);
+					checkCount = 5;
+					break;
+				case "średni":
+					GenerateSudoku(30, grid);
+					checkCount = 3;
+					break;
+				case "trudny":
+					GenerateSudoku(40, grid);
+					checkCount = 1;
+					break;
+				default:
+					GenerateSudoku(20, grid);
+					break;
+			}
 
 			buttonSprawdz.Click += (s, e) =>
 			{
