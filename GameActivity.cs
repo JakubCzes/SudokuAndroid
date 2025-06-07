@@ -11,8 +11,11 @@ namespace SudokuMobile
 	[Activity(Label = "GameActivity", ScreenOrientation = ScreenOrientation.Portrait)]
 	public class GameActivity : Activity
     {
+		System.Timers.Timer timer;
 		int[,] solvedBoard = new int[9, 9];
-		int checkCount;
+		DateTime startTime;
+		TextView textCzas;
+		int minutes, seconds, checkCount;
 		protected override void OnCreate(Bundle? savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -35,6 +38,7 @@ namespace SudokuMobile
 
 			TextView trudnosc = FindViewById<TextView>(Resource.Id.textTrudnosc);
 			GridLayout grid = FindViewById<GridLayout>(Resource.Id.sudokuGrid);
+			textCzas = FindViewById<TextView>(Resource.Id.textCzas);
 			Button buttonSprawdz = FindViewById<Button>(Resource.Id.buttonSprawdz);
 
 			trudnosc.Text = $"Trudność: {poziom}";
@@ -57,6 +61,14 @@ namespace SudokuMobile
 					GenerateSudoku(20, grid);
 					break;
 			}
+
+			startTime = DateTime.Now;
+			TimeSpan elapsed = DateTime.Now - startTime;
+			minutes = (int)elapsed.TotalMinutes;
+			seconds = elapsed.Seconds;
+			textCzas.Text = $"Czas: {minutes:D2}:{seconds:D2}";
+
+			StartTimer();
 
 			buttonSprawdz.Click += (s, e) =>
 			{
@@ -97,7 +109,7 @@ namespace SudokuMobile
 
 				if (errors == 0)
 				{
-					Toast.MakeText(this, $"Gratulacje! Wszystkie liczby są poprawne!", ToastLength.Long).Show();
+					Toast.MakeText(this, $"Gratulacje! Wszystkie liczby są poprawne! Czas: {minutes:D2}:{seconds:D2}", ToastLength.Long).Show();
 					Finish();
 				}
 				else
@@ -330,6 +342,21 @@ namespace SudokuMobile
 					}
 				};
 			}
+		}
+		private void StartTimer()
+		{
+			timer = new System.Timers.Timer(1000); // 1 sekunda
+			timer.Elapsed += (s, e) =>
+			{
+				RunOnUiThread(() =>
+				{
+					TimeSpan elapsed = DateTime.Now - startTime;
+					minutes = (int)elapsed.TotalMinutes;
+					seconds = elapsed.Seconds;
+					textCzas.Text = $"Czas: {minutes:D2}:{seconds:D2}";
+				});
+			};
+			timer.Start();
 		}
 	}
 }
